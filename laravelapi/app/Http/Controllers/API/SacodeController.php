@@ -18,8 +18,8 @@ class SacodeController extends Controller
         $sacode->save();
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Tambah Data berhasil',
+            'status' =>200,
+            'message' =>'Tambah Data berhasil',
         ]);
    }
    public function tes()

@@ -19,8 +19,8 @@ class Sacode extends Component
 
     saveSacode = async (e) =>{
         e.preventDefault();
-        console.log(this.state);
-        const res = await axios.post('http://127.0.0.1:8000/api/add-sacode', this.state);
+        // console.log(this.state);
+        const res = await axios.post('http://127.0.0.1:8000/api/add-sacode',this.state);
         if(res.data.status === 200)
         {
             console.log(res.data.message);
@@ -60,10 +60,11 @@ class Sacode extends Component
                                 <div className="mb-3">
                                     <label>Kategori</label>
                                     <select className="form-control" name="kategori"  onChange={this.handleInput} value={this.state.kategori}>
-                                    <option value="Mobile App">Mobile App</option>
-                                    <option value="Web">Web</option>
-                                    <option value="Desktop">Desktop</option>
-                                    <option value="Cyber Security">Cyber Security</option>
+                                        <option  selected value="">-- Pilih --- </option>
+                                        <option  selected value="Mobile App">Mobile App</option>
+                                        <option value="Web">Web</option>
+                                        <option value="Desktop">Desktop</option>
+                                        <option value="Cyber Security">Cyber Security</option>
                                     </select>
                                 </div>
                                 <div className='form-group mb-3'>
