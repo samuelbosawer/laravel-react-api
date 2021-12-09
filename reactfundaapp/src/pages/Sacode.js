@@ -19,26 +19,37 @@ class Sacode extends Component
                 loading: false,
             })
         }
+      
+    }
+    deleteSacode = async (e, id) =>{
+        const click = e.currentTarget;
+        click.innerText = 'Deleting';
+        const res = await axios.delete(`http://127.0.0.1:8000/api/delete-sacode/${id}`);
+        if(res.data.status === 200)
+        {
+            click.closest('tr').remove();
+            alert('Data Berhasil dihapus');
+        }
     }
 
     render(){
         var sacode_HTMLTABLE = "";
         if(this.state.loading)
         {
-            sacode_HTMLTABLE = <tr> <td colSpan="6"> <h3>Loading ....</h3> </td> </tr>
+            sacode_HTMLTABLE = <tr><td colSpan="6"><h3>Loading ....</h3></td></tr>
         }else{
             sacode_HTMLTABLE =  this.state.sacodes.map((item)=>{
                 return(
-                    <tr key={item.id} >
+                    <tr key={item.id}>
                         <td>{item.nama}</td>
                         <td>{item.topik}</td>
                         <td>{item.tanggal}</td>
                         <td>{item.kategori}</td>
                         <td>
-                            <Link to={'edit-sacode/${item.id}'} className='btn btn-success btn-sm ml-3'> Ubah</Link>
+                            <Link to={`edit-sacode/${item.id}`} className='btn btn-success btn-sm ml-3'> Ubah</Link>
                         </td>
                         <td>
-                            <button type="button" className="btn btn-danger mr-3">Hapus</button>
+                            <button type="button" onClick={(e) => this.deleteSacode(e, item.id)} className="btn btn-danger mr-3">Hapus</button>
                         </td>
                     </tr>
                 )

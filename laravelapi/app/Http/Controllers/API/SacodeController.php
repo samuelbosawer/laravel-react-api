@@ -30,8 +30,36 @@ class SacodeController extends Controller
             'message' =>'Tambah Data berhasil',
         ]);
    }
-   public function tes()
+   public function edit($id)
    {
-       return 'ssss';
+       $sacode = Sacode::find($id);
+       return response()->json([
+        'status' => 200,
+        'sacode' => $sacode
+    ]);
+   }
+   public function update(Request $request, $id)
+   {
+    $sacode = Sacode::find($id);
+    $sacode->nama = $request->input('nama');
+    $sacode->topik = $request->input('topik');
+    $sacode->tanggal = $request->input('tanggal');
+    $sacode->kategori = $request->input('kategori');
+    $sacode->update();
+
+    return response()->json([
+        'status' =>200,
+        'message' =>'Ubah Data berhasil',
+    ]);
+   }
+   public function destroy($id)
+   {
+       $sacode = Sacode::find($id);
+       $sacode->delete();
+
+       return response()->json([
+        'status' =>200,
+        'message' =>'Data berhasil dihapus',
+    ]);
    }
 }

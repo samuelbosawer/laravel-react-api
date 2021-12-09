@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
-class Sacode extends Component
+class Editsacode extends Component
 {
     state ={
         nama: '',
@@ -18,24 +17,33 @@ class Sacode extends Component
         });
     }
 
-    saveSacode = async (e) =>{
-        e.preventDefault();
-        // console.log(this.state);
-        const res = await axios.post('http://127.0.0.1:8000/api/add-sacode',this.state);
+    async componentDidMount(){
+        const id_sc =this.props.match.params.id;
+        const res = await axios.get(`http://127.0.0.1:8000/api/edit-sacode/${id_sc}`);
         if(res.data.status === 200)
         {
-            alert('Data Berhasil ditambahkan');
             this.setState({
-                nama: '',
-                topik: '',
-                tanggal: '',
-                kategori: '',
+                nama: res.data.sacode.nama,
+                topik:  res.data.sacode.topik,
+                tanggal:  res.data.sacode.tanggal,
+                kategori:  res.data.sacode.kategori,
             })
-            Redirect('/');
+        }
+    }
 
-        }else{
-            alert('Data gagal ditambahkan, harap diisi dengan benar');
+    updateSacode = async (e) =>{
+        e.preventDefault();
+        document.getElementById('updatebtn').disabled = true;
+        document.getElementById('updatebtn').innerText = 'Mengubah';
+        const id_sc =this.props.match.params.id;
+        const res = await axios.put(`http://127.0.0.1:8000/api/update-sacode/${id_sc}`, this.state);
+        if(res.data.status === 200)
+        {
+            console.log(res.data.message);
+            document.getElementById('updatebtn').disabled = false;
+            document.getElementById('updatebtn').innerText = 'Ubah';
 
+            
         }
     }
     render(){
@@ -45,12 +53,12 @@ class Sacode extends Component
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Tambah Data Narasumber
+                                <h4>Ubah Data Narasumber
                                     <Link to={'/'} className="btn btn-primary btn-sm float-end">Kembali</Link>
                                 </h4>
                             </div>
                             <div className='card-body'>
-                            <form onSubmit={this.saveSacode}>
+                            <form onSubmit={this.updateSacode}>
                                     <div className='form-group mb-3'>
                                         <label>Nama Narasumber</label>
                                         <input className='form-control' type="text" name="nama" onChange={this.handleInput} value={this.state.nama}  />
@@ -66,15 +74,15 @@ class Sacode extends Component
                                 <div className="mb-3">
                                     <label>Kategori</label>
                                     <select className="form-control" name="kategori"  onChange={this.handleInput} value={this.state.kategori}>
-                                        <option   value="">-- Pilih --- </option>
-                                        <option   value="Mobile App">Mobile App</option>
+                                        <option>-- Pilih --- </option>
+                                        <option value="Mobile App">Mobile App</option>
                                         <option value="Web">Web</option>
                                         <option value="Desktop">Desktop</option>
                                         <option value="Cyber Security">Cyber Security</option>
                                     </select>
                                 </div>
                                 <div className='form-group mb-3'>
-                                     <button type='submit' className='btn btn-primary'> Simpan</button>
+                                     <button type='submit' id='updatebtn' className='btn btn-primary'> Ubah</button>
                                     </div> 
                                </form>
                             </div>
@@ -86,4 +94,4 @@ class Sacode extends Component
     }
 }
 
-export default Sacode;
+export default Editsacode;
