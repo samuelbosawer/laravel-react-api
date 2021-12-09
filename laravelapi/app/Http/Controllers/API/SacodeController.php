@@ -8,6 +8,14 @@ use App\Models\Sacode;
 
 class SacodeController extends Controller
 {
+   public function index()
+   {
+       $sacodes = Sacode::all();
+       return response()->json([
+           'status' => 200,
+           'sacodes' => $sacodes
+       ]);
+   }
    public function store(Request $request)
    {
         $sacode = new Sacode;
