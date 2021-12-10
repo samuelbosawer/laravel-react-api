@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sacode;
+use Illuminate\Support\Facades\Validator;
 
 class SacodeController extends Controller
 {
@@ -18,6 +19,17 @@ class SacodeController extends Controller
    }
    public function store(Request $request)
    {
+      $validator = Validator::make($request->all(),[
+          'nama' => 'required',
+          'topik' => 'required',
+          'tanggal' => 'required',
+          'kategori' => 'required',
+      ]);
+      if($validator->fails()){
+        return response()->json([
+            'validate_err' => $validator->messages(),
+        ]);
+      }else{
         $sacode = new Sacode;
         $sacode->nama = $request->input('nama');
         $sacode->topik = $request->input('topik');
@@ -29,6 +41,9 @@ class SacodeController extends Controller
             'status' =>200,
             'message' =>'Tambah Data berhasil',
         ]);
+    }
+    
+       
    }
    public function edit($id)
    {

@@ -10,6 +10,7 @@ class Sacode extends Component
         topik: '',
         tanggal: '',
         kategori: '',
+        error_list: [],
     }
 
     handleInput = (e) =>{
@@ -24,17 +25,19 @@ class Sacode extends Component
         const res = await axios.post('http://127.0.0.1:8000/api/add-sacode',this.state);
         if(res.data.status === 200)
         {
-            alert('Data Berhasil ditambahkan');
             this.setState({
                 nama: '',
                 topik: '',
                 tanggal: '',
                 kategori: '',
             })
-            Redirect('/');
-
-        }else{
-            alert('Data gagal ditambahkan, harap diisi dengan benar');
+            // alert('Data Berhasil ditambahkan');
+        }
+        else
+        {
+           this.setState({
+               error_list: res.data.validate_err,
+           });
 
         }
     }
@@ -54,14 +57,17 @@ class Sacode extends Component
                                     <div className='form-group mb-3'>
                                         <label>Nama Narasumber</label>
                                         <input className='form-control' type="text" name="nama" onChange={this.handleInput} value={this.state.nama}  />
+                                        <span className='text-danger'>{this.state.error_list.nama}</span>
                                     </div>  
                                     <div className='form-group mb-3'>
                                         <label>Topik</label>
                                         <input className='form-control' type="text" name="topik" onChange={this.handleInput} value={this.state.topik} />
+                                        <span className='text-danger text-small'>{this.state.error_list.topik}</span>
                                     </div>  
                                     <div className='form-group mb-3'>
                                         <label>Tanggal</label>
                                         <input className='form-control' type="date" name="tanggal" onChange={this.handleInput} value={this.state.tanggal}/>
+                                        <span className='text-danger text-small'>{this.state.error_list.tanggal}</span>
                                     </div>  
                                 <div className="mb-3">
                                     <label>Kategori</label>
@@ -72,6 +78,7 @@ class Sacode extends Component
                                         <option value="Desktop">Desktop</option>
                                         <option value="Cyber Security">Cyber Security</option>
                                     </select>
+                                        <span className='text-danger text-small'>{this.state.error_list.tanggal}</span>
                                 </div>
                                 <div className='form-group mb-3'>
                                      <button type='submit' className='btn btn-primary'> Simpan</button>
