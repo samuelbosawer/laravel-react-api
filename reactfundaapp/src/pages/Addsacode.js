@@ -31,7 +31,10 @@ class Sacode extends Component
                 tanggal: '',
                 kategori: '',
             })
-            // alert('Data Berhasil ditambahkan');
+            this.setState({
+                error_list:'',
+            });
+            alert('Data Berhasil ditambahkan');
         }
         else
         {
@@ -78,7 +81,7 @@ class Sacode extends Component
                                         <option value="Desktop">Desktop</option>
                                         <option value="Cyber Security">Cyber Security</option>
                                     </select>
-                                        <span className='text-danger text-small'>{this.state.error_list.tanggal}</span>
+                                        <span className='text-danger text-small'>{this.state.error_list.kategori}</span>
                                 </div>
                                 <div className='form-group mb-3'>
                                      <button type='submit' className='btn btn-primary'> Simpan</button>

@@ -42,6 +42,7 @@ class Editsacode extends Component
             console.log(res.data.message);
             document.getElementById('updatebtn').disabled = false;
             document.getElementById('updatebtn').innerText = 'Ubah';
+            alert('Data Berhasil diubah');
 
             
         }

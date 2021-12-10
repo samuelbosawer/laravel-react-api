@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import c3 from "c3";
+
 
 class Sacode extends Component
 {
@@ -32,6 +34,8 @@ class Sacode extends Component
         }
     }
 
+    
+
     render(){
         var sacode_HTMLTABLE = "";
         if(this.state.loading)
@@ -55,6 +59,8 @@ class Sacode extends Component
                 )
             })
         }
+
+     
         return(
             <div className="container">
                 <div className="row">
